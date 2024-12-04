@@ -3,21 +3,42 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const nunjucks = require('nunjucks');
+const session = require('express-session');
+const dotenv = require('dotenv');
 
+const ws = require('./socket');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
-var app = express();
+dotenv.config();
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
+var app = express();
+app.set('port', process.env.PORT || 8000);
+
+// set template engine
+app.set('view engine', 'html');
+nunjucks.configure('views', {
+  express: app,
+  watch: true,
+});
+
+const sessionMiddleware = session({
+  resave: false,
+  saveUninitialized: false,
+  secret: process.env.COOKIE_SECRET,
+  cookie: {
+    httpOnly: true,
+    secure: false,
+  },
+});
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(sessionMiddleware);
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
@@ -38,4 +59,8 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-module.exports = app;
+const server = app.listen(app.get('port'), () => {
+  console.log(app.get('port'), '번 포트에서 대기 중');
+});
+
+// ws(server, app, sessionMiddleware);
