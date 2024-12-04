@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title> {{title}} </title>
+        <link rel="stylesheet" href="./main.css">
+    </head>
+    <body>
+        <header class="header">
+            <h1>NEWS LOOP</h1>
+
+            <div class="nav-menu">
+                <ul>
+                    <li> <a href="/">홈</a> </li>
+                    <li> <a href="/users">마이 페이지 </a> </li>
+                    <li> <a href="/login">로그인 </a> </li>
+                </ul>
+            </div>
+        </header>
+        {% block content %}
+        {% endblock %}
+
+        {% block script %}
+        {% endblock %}
+    </body>
+</html>
