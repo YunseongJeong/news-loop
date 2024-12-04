@@ -14,7 +14,7 @@
 <!--</div>-->
 {% for article in articles %}
 <div class="article-block">
-    <img class="article-image" src="/images/test.png"/>
+    <img class="article-image" src="{{ article.image_path }}"/>
     <div class="container">
         <h4 class="article-subject"> {{ article.subject }} </h4>
         <p class="article-description"> {{ article.description }} </p>
