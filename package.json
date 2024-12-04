@@ -4,7 +4,6 @@
   "description": "news letter system ",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon app.js"
   },
   "author": "Yunseong Jeong",
@@ -17,8 +16,17 @@
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "express": "~4.16.1",
+    "dotenv": "^16.3.1",
     "http-errors": "~1.6.3",
     "morgan": "~1.9.1",
-    "pug": "2.0.0-beta11"
+    "pug": "2.0.0-beta11",
+    "express-session": "^1.17.3",
+    "mysql2": "^3.6.5",
+    "nunjucks": "^3.2.4",
+    "socket.io": "^4.7.2",
+    "ws": "^8.14.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7"
   }
 }
