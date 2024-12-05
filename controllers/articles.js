@@ -9,7 +9,7 @@ exports.renderArticle = async (req, res, next) => {
             return res.status(403).send('내용을 찾을 수 없습니다.');
         }
         const [comments] = await db.execute('select comments.id as id, uid, username, content from comments join users on comments.uid=users.id where aid=?;', [rows[0].id]);
-        res.render('article', {title: rows[0].subject, article: rows[0], comments: comments, user: req.user});
+        res.render('article', {title: rows[0].subject, article: rows[0], comments: comments, user: req.user, isLoggedIn: req.isAuthenticated()});
     } catch (err) {
         console.error(err);
         next(err);
