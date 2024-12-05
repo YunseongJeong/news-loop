@@ -18,3 +18,16 @@
 </div>
 
 {% endblock %}
+
+{% block script %}
+ <script>
+     { // login error handler
+         const params = new URLSearchParams(window.location.search);
+         const loginError = params.get('loginError');
+         if (loginError) {
+             alert(decodeURIComponent(loginError));
+         }
+     }
+
+ </script>
+{% endblock %}
