@@ -3,8 +3,9 @@ const db = require(process.cwd() + '/models');
 const bcrypt = require('bcrypt');
 // const saltRounds = process.env.SALT_ROUNDS;
 const passport = require('passport');
+
 exports.renderLogin = async (req, res, next) =>{
-    res.render('login', {title: 'Login Page'});
+    res.render('login', {title: 'Login Page', isLoggedIn: req.isAuthenticated()});
 };
 
 exports.login = async (req, res, next) =>{
@@ -27,7 +28,7 @@ exports.login = async (req, res, next) =>{
 };
 
 exports.renderSignup = async (req, res, next)=>{
-    res.render('signup', {title: 'Login Page'});
+    res.render('signup', {title: 'Login Page', isLoggedIn: req.isAuthenticated()});
 };
 
 exports.signup = async (req, res, next) =>{
@@ -46,4 +47,14 @@ exports.signup = async (req, res, next) =>{
         console.error(err);
         return next(err);
     }
+};
+
+exports.logout = (req, res, next) => {
+    req.logout((err)=>{
+        if (err){
+            console.error(err);
+            next(err);
+        }
+        return res.redirect('/');
+    });
 };
