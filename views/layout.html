@@ -15,7 +15,11 @@
                 <ul>
                     <li> <a href="/">홈</a> </li>
                     <li> <a href="/users">마이 페이지 </a> </li>
+                    {% if isLoggedIn %}
+                    <li> <a href="/users/logout">로그아웃 </a> </li>
+                    {% else %}
                     <li> <a href="/users/login">로그인 </a> </li>
+                    {% endif %}
                 </ul>
             </div>
         </header>
