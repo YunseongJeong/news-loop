@@ -9,9 +9,7 @@ exports.renderArticle = async (req, res, next) => {
             return res.status(403).send('내용을 찾을 수 없습니다.');
         }
         const [comments] = await db.execute('select comments.id as id, uid, username, content from comments join users on comments.uid=users.id where aid=?;', [rows[0].id]);
-
         res.render('article', {title: rows[0].subject, article: rows[0], comments: comments, user: req.user});
-
     } catch (err) {
         console.error(err);
         next(err);
@@ -24,7 +22,7 @@ exports.saveComment = async (req, res, next) => {
         const uid = req.user.id;
         const content = req.body.content;
         await db.execute('insert into comments (aid, uid, content) values (?, ?, ?);', [aid, uid, content]);
-        return res.redirect('.?message=성공적으로 댓글을 달았습니다.');
+        return res.redirect(`/articles/${aid}?message=성공적으로 댓글을 달았습니다.`);
     } catch (err){
         console.error(err);
         next(err);
