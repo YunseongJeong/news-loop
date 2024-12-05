@@ -6,14 +6,17 @@ var logger = require('morgan');
 const nunjucks = require('nunjucks');
 const session = require('express-session');
 const dotenv = require('dotenv');
+const passport = require('passport');
 
 const ws = require('./socket');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 dotenv.config();
+const passportConfig = require('./passport');
 
 var app = express();
+passportConfig();
 app.set('port', process.env.PORT || 8000);
 
 // set template engine
@@ -39,6 +42,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(sessionMiddleware);
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
