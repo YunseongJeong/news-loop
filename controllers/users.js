@@ -14,7 +14,7 @@ exports.login = async (req, res, next) =>{
             return next(authErr);
         }
         if (!user) {
-            return res.redirect(`/?loginError=${info.message}`);
+            return res.redirect(`./login?loginError=${info.message}`);
         }
         return req.login(user, (loginErr)=>{
             if (loginErr){
