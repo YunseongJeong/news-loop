@@ -3,21 +3,54 @@
 {% block content %}
 
 <div class="article-container">
-
     <div class="container">
-        <h4 class="article-subject"> {{ article.subject }} </h4>
+        <h1 class="article-subject"> {{ article.subject }} </h1>
         <p class="article-writer"> {{ article.username }}</p>
         <p class="article-date"> {{ article.created_at }} </p>
         <img class="article-image" src="{{ article.image_path }}"/>
         <p class="article-description"> {{ article.content }} </p>
-
+    </div>
+</div>
+<div class="container">
+    <div class="comment-block">
+        <form action="/articles/comments/{{ article.id }}" method="POST">
+            <label for="content">comment</label>
+            <br>
+            <textarea id="content" name="content" rows="6" cols="50" placeholder="여기에 댓글를 입력하세요..."></textarea>
+            <button type="submit">쓰기</button>
+            <br>
+        </form>
+    </div>
+    <div class="comment-container">
+        {% for comment in comments %}
+        <div class="comment-block">
+            <h4 class="comment-writer"> {{ comment.username }}</h4>
+            <p class="comment-content"> {{ comment.content }} </p>
+            {% if comment.uid == user.id %}
+            <button onclick="deleteComment(event)", data-comment-id="{{ comment.id }}"> 삭제 </button>
+            {% endif %}
+        </div>
+        {% endfor %}
     </div>
 </div>
 
 {% endblock %}
 
 {% block script %}
-<script>
 
+<script>
+    { // message handler
+        const params = new URLSearchParams(window.location.search);
+        const message = params.get('message');
+        if (message) {
+            alert(decodeURIComponent(message));
+        }
+    }
+
+    function deleteComment(e){
+        const commentId = e.target.dataset.commentId;
+        console.log(commentId);
+        axios.delete(`/articles/comments/${commentId}`);
+    }
 </script>
 {% endblock %}
