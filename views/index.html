@@ -2,26 +2,18 @@
 
 {% block content %}
 
-
-
-<!--<div class="article-block">-->
-<!--    <img class="article-image" src="/images/test.png"/>-->
-<!--    <div class="container">-->
-<!--        <h4 class="article-subject"> 뉴스 제목 </h4>-->
-<!--        <p class="article-description"> 이러쿵 저러쿵이다~ </p>-->
-<!--        <p class="article-date"> 2024.12.4</p>-->
-<!--    </div>-->
-<!--</div>-->
-{% for article in articles %}
-<div class="article-block">
-    <img class="article-image" src="{{ article.image_path }}"/>
-    <div class="container">
-        <h4 class="article-subject"> {{ article.subject }} </h4>
-        <p class="article-description"> {{ article.description }} </p>
-        <p class="article-date"> {{ article.createdAt }} </p>
-    </div>
-</div>
-{% endfor %}
+    {% for article in articles %}
+    <a href="/articles/{{ article.id }}">
+        <div class="article-block">
+            <img class="article-image" src="{{ article.image_path }}"/>
+            <div class="container">
+                <h4 class="article-subject"> {{ article.subject }} </h4>
+                <p class="article-description"> {{ article.description }} </p>
+                <p class="article-date"> {{ article.createdAt }} </p>
+            </div>
+        </div>
+    </a>
+    {% endfor %}
 
 {% endblock %}
 
