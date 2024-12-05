@@ -38,3 +38,16 @@
 .container{
     flex: 1;
 }
+
+.comment-container{
+    height: 300px;
+    overflow-y: auto;
+}
+
+.comment-block{
+    margin: 5px 20px 5px 20px;
+    padding: 5px 20px 10px 20px ;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
