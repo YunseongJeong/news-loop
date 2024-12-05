@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<div class="article-container">
+
+    <div class="container">
+        <h4 class="article-subject"> {{ article.subject }} </h4>
+        <p class="article-writer"> {{ article.username }}</p>
+        <p class="article-date"> {{ article.created_at }} </p>
+        <img class="article-image" src="{{ article.image_path }}"/>
+        <p class="article-description"> {{ article.content }} </p>
+
+    </div>
+</div>
+
+{% endblock %}
+
+{% block script %}
+<script>
+
+</script>
+{% endblock %}
