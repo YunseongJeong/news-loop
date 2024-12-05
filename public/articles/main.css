@@ -1,0 +1,40 @@
+.article-container {
+    background-color: #F7F9FC;
+    margin: 20px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    display: flex;
+
+    transition: transform 0.2s, box-shadow 0.2s;
+    flex: 1;
+}
+
+.article-image{
+    border-radius: 10px;
+    width: 200px;
+    height: 200px;
+    margin: 15px;
+}
+
+.article-subject{
+    font-size: 30px;
+    font-weight: bold;
+
+}
+
+.article-content{
+    font-size: 20px;
+}
+
+.article-writer{
+    text-align: right;
+}
+
+.article-date{
+    text-align: right;
+}
+
+.container{
+    flex: 1;
+}
