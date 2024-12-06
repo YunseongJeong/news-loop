@@ -6,7 +6,7 @@ exports.renderArticle = async (req, res, next) => {
         const [rows] = await db.execute('select articles.id as id, subject, image_path, content, articles.created_at as created_at, username from articles join users on articles.uid=users.id where articles.id=?', [aid]);
 
         if (rows.length <= 0){
-            return res.status(403).send('내용을 찾을 수 없습니다.');
+            return res.status(503).render('error', {message: '내용을 찾을 수 없습니다.', error:{status: 503}});
         }
         const [comments] = await db.execute('select comments.id as id, uid, username, content from comments join users on comments.uid=users.id where aid=?;', [rows[0].id]);
         res.render('article', {title: rows[0].subject, article: rows[0], comments: comments, user: req.user, isLoggedIn: req.isAuthenticated()});
@@ -34,7 +34,7 @@ exports.deleteComment = async (req, res, next) => {
         const cid = req.params.cid;
         const [comments] = await db.execute('select uid from comments where id=?', [cid]);
         if (comments.length <= 0){
-            return res.status(403).send('해당 댓글을 찾을 수 없습니다.');
+            return res.status(503).send('해당 댓글을 찾을 수 없습니다.');
         }
 
         if (req.user.id === comments[0].uid){
