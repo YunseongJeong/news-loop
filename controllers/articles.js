@@ -1,5 +1,25 @@
 const db = require(process.cwd() + '/models');
 
+exports.deleteArticle = async (req, res, next) => {
+    try {
+
+        const aid = req.params.aid;
+        console.log(`try delete article ${aid}`);
+        const [articles] = await db.execute('select * from articles where id=?', [aid]);
+        if (articles[0].length <= 0){
+            return res.status(503).render('error', {message: '해당 글을 찾을 수 없습니다.', error:{status: 503}});
+        }
+        if (articles[0].uid !== req.user.id){
+            return res.status(403).render('error', {message: '본인 글만 삭제 할 수 있습니다.', error:{status: 403}});
+        }
+        await db.execute('delete from articles where id=?', [aid]);
+        return res.redirect('/users/dashboard?message=성공적으로 삭제했습니다.');
+    } catch (err) {
+        console.error(err);
+        next(err);
+    }
+}
+
 exports.renderArticle = async (req, res, next) => {
     try{
         const aid = req.params.aid;
