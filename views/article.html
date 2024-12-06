@@ -9,6 +9,19 @@
         <p class="article-date"> {{ article.created_at }} </p>
         <img class="article-image" src="{{ article.image_path }}"/>
         <p class="article-description"> {{ article.content }} </p>
+
+
+        {% if like %}
+        <p class="article-like" onclick="unlike()">
+            ❤️ {{ likeCount }}
+        </p>
+        {% else %}
+        <p class="article-like" onclick="like()">
+            🤍 {{ likeCount }}
+        </p>
+
+        {% endif %}
+
     </div>
 </div>
 <div class="container">
@@ -51,6 +64,18 @@
         const commentId = e.target.dataset.commentId;
         console.log(commentId);
         axios.delete(`/articles/comments/${commentId}`);
+    }
+
+    function like(){
+        const pathname = window.location.pathname;
+        const aid = pathname.split('/').pop();
+        axios.get(`/articles/like/${aid}`);
+    }
+
+    function unlike(){
+        const pathname = window.location.pathname;
+        const aid = pathname.split('/').pop();
+        axios.get(`/articles/unlike/${aid}`);
     }
 </script>
 {% endblock %}
