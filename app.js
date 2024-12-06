@@ -1,21 +1,20 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 const nunjucks = require('nunjucks');
 const session = require('express-session');
 const dotenv = require('dotenv');
 const passport = require('passport');
 
-const ws = require('./socket');
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
 const articlesRouter = require('./routes/articles');
 dotenv.config();
 const passportConfig = require('./passport');
 
-var app = express();
+const app = express();
 passportConfig();
 app.set('port', process.env.PORT || 8000);
 
