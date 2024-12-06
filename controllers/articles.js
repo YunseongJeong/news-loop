@@ -36,6 +36,31 @@ exports.renderArticle = async (req, res, next) => {
     }
 };
 
+
+exports.like = async (req, res, next) =>{
+    try{
+        const aid = req.params.aid;
+        const uid = req.user.id;
+        await db.execute('insert into likes (aid, uid) values (?, ?)', [aid, uid]);
+        res.redirect(`/articles/${aid}`);
+    } catch (err){
+        console.error(err);
+        next(err);
+    }
+}
+
+exports.unlike = async (req, res, next) =>{
+    try{
+        const aid = req.params.aid;
+        const uid = req.user.id;
+        await db.execute('delete from likes where uid=? and aid=?;', [uid, aid]);
+        res.redirect(`/articles/${aid}`);
+    } catch (err){
+        console.error(err);
+        next(err);
+    }
+}
+
 exports.saveComment = async (req, res, next) => {
     try{
         const aid = req.params.aid;
