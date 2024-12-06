@@ -13,9 +13,12 @@ const usersRouter = require('./routes/users');
 const articlesRouter = require('./routes/articles');
 dotenv.config();
 const passportConfig = require('./passport');
+const mailer = require('./services/mailer');
 
 const app = express();
 passportConfig();
+mailer(); // set mail scheduler;
+
 app.set('port', process.env.PORT || 8000);
 
 // set template engine
