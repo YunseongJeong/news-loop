@@ -1,3 +1,5 @@
+<!-- article을 작성하는 화면 구성-->
+
 {% extends 'layout.html' %}
 
 {% block content %}
@@ -40,6 +42,7 @@
 
 {% block script %}
 <script>
+    // input file을 사용해 넣었을 때 image-view에서 미리보기 띄우는 로직
     const imageInput = document.getElementById('image_path');
     const previewImage = document.getElementById('image-view');
 

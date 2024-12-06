@@ -1,8 +1,13 @@
+// controllers/articles.js
+// article 관련 기능을 가지고 있는 controller
+
 const db = require(process.cwd() + '/models');
 
+// delete article
+// article을 삭제한다.
+// (본인이 쓴 article인지 확인 후 삭제한다.
 exports.deleteArticle = async (req, res, next) => {
     try {
-
         const aid = req.params.aid;
         console.log(`try delete article ${aid}`);
         const [articles] = await db.execute('select * from articles where id=?', [aid]);
@@ -20,6 +25,9 @@ exports.deleteArticle = async (req, res, next) => {
     }
 }
 
+// render article
+// article page를 렌더링 한다.
+// article 정보, 작성한 user의 이름, 댓글, 좋아요 수를 db에서 가져온 후 rendering에 사용한다.
 exports.renderArticle = async (req, res, next) => {
     try{
         const aid = req.params.aid;
@@ -46,7 +54,8 @@ exports.renderArticle = async (req, res, next) => {
     }
 };
 
-
+// like
+// 좋아요 수를 올린다.
 exports.like = async (req, res, next) =>{
     try{
         const aid = req.params.aid;
@@ -59,6 +68,8 @@ exports.like = async (req, res, next) =>{
     }
 }
 
+// unlike
+// 좋아요를 취소한다.
 exports.unlike = async (req, res, next) =>{
     try{
         const aid = req.params.aid;
@@ -71,6 +82,8 @@ exports.unlike = async (req, res, next) =>{
     }
 }
 
+// save comment
+// 작성한 댓글을 저장한다.
 exports.saveComment = async (req, res, next) => {
     try{
         const aid = req.params.aid;
@@ -84,6 +97,8 @@ exports.saveComment = async (req, res, next) => {
     }
 };
 
+// delete comment
+// 본인이 작성한 댓글인지 확인 후 삭제한다.
 exports.deleteComment = async (req, res, next) => {
     try {
         const cid = req.params.cid;
@@ -91,7 +106,6 @@ exports.deleteComment = async (req, res, next) => {
         if (comments.length <= 0){
             return res.status(503).send('해당 댓글을 찾을 수 없습니다.');
         }
-
         if (req.user.id === comments[0].uid){
             await db.execute('delete from comments where id=?', [cid]);
             return res.redirect('.?message=성공적으로 삭제했습니다.');
@@ -104,11 +118,15 @@ exports.deleteComment = async (req, res, next) => {
     }
 };
 
+// render edit article
+// article 작성 페이지를 렌더링한다.
 exports.renderEditArticle = (req, res, next)=>{
     return res.render('edit-article', { title: "create article", isLoggedIn: req.isAuthenticated()});
 };
 
-exports.createArticle = async (req, res, next) => {
+// save article
+// 작성된 article을 저장한다.
+exports.saveArticle = async (req, res, next) => {
     try {
         const uid = req.user.id;
         await db.execute('insert into articles(subject, description, content, uid, image_path) values (?, ?, ?, ?, ?)'

@@ -1,3 +1,5 @@
+<!--article 화면을 구성-->
+
 {% extends 'layout.html' %}
 
 {% block content %}
@@ -10,7 +12,7 @@
         <img class="article-image" src="{{ article.image_path }}"/>
         <p class="article-description"> {{ article.content }} </p>
 
-
+<!--        본인이 like를 눌렀는지에 따라 다른 함수와 이모티콘을 사용 -->
         {% if like %}
         <p class="article-like" onclick="unlike()">
             ❤️ {{ likeCount }}
@@ -39,6 +41,7 @@
         <div class="comment-block">
             <h4 class="comment-writer"> {{ comment.username }}</h4>
             <p class="comment-content"> {{ comment.content }} </p>
+<!--             본인의 comment 일 때만 삭제 버튼 활성화-->
             {% if comment.uid == user.id %}
             <button onclick="deleteComment(event)", data-comment-id="{{ comment.id }}"> 삭제 </button>
             {% endif %}
@@ -52,7 +55,7 @@
 {% block script %}
 
 <script>
-    { // message handler
+    { // message handler (query로 온 message 처리)
         const params = new URLSearchParams(window.location.search);
         const message = params.get('message');
         if (message) {
@@ -60,18 +63,21 @@
         }
     }
 
+    // comment 삭제 함수
     function deleteComment(e){
         const commentId = e.target.dataset.commentId;
         console.log(commentId);
         axios.delete(`/articles/comments/${commentId}`);
     }
 
+    // 좋아요 함수
     function like(){
         const pathname = window.location.pathname;
         const aid = pathname.split('/').pop();
         axios.get(`/articles/like/${aid}`);
     }
 
+    // 좋아요 취소 함수
     function unlike(){
         const pathname = window.location.pathname;
         const aid = pathname.split('/').pop();

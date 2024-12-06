@@ -1,7 +1,9 @@
+// services/multer.js
+// multer 연결, 설정을 담당하는 service
+
 const multer = require('multer');
 const fs = require('fs');
 const path = require('path');
-const express = require("express");
 
 module.exports = ()=>{
     const uploadDir = path.join(__dirname, '../public/images');

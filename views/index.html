@@ -1,3 +1,5 @@
+<!-- main 화면을 구성-->
+
 {% extends 'layout.html' %}
 
 {% block content %}
@@ -20,7 +22,7 @@
 
 {% block script %}
     <script>
-        { // message handler
+        { // message handler (url query로 message가 왔을 때 처리)
             const params = new URLSearchParams(window.location.search);
             const message = params.get('message');
             if (message) {

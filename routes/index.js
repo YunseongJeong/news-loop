@@ -1,9 +1,12 @@
-var express = require('express');
-var router = express.Router();
+// routes/index.js
+// index routing을 담당하는 router
+
+const express = require('express');
+const router = express.Router();
 
 const {renderIndex} = require('../controllers/index');
 
-/* GET home page. */
+// main page
 router.get('/', renderIndex);
 
 module.exports = router;

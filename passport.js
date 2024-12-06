@@ -1,3 +1,6 @@
+// passport.js
+// passport 설정을 담당한다.
+
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const db = require(process.cwd() + '/models');

@@ -1,3 +1,5 @@
+<!-- layout을 정의, header (navigator 또한) 구성-->
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -16,6 +18,8 @@
                     <li> <a href="/">홈</a> </li>
                     <li> <a href="/articles/edit"> 글 쓰러 가기 </a> </li>
                     <li> <a href="/users/dashboard">마이 페이지 </a> </li>
+
+<!--                    로그인 여부에 따라 다른 버튼 표시-->
                     {% if isLoggedIn %}
                     <li> <a href="/users/logout">로그아웃 </a> </li>
                     {% else %}

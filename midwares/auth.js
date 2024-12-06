@@ -1,3 +1,8 @@
+// midwares/auth.js
+// 로그인 여부를 확인 하는 midware
+
+// is logged in
+// login 된 상태인지 확인한다.
 exports.isLoggedIn = (req, res, next) =>{
     if (req.isAuthenticated()){
         next();
@@ -6,6 +11,8 @@ exports.isLoggedIn = (req, res, next) =>{
     }
 };
 
+// is not logged in
+// login 안 된 상태인지 확인한다.
 exports.isNotLoggedIn = (req, res, next) =>{
     if (!req.isAuthenticated()){
         next();

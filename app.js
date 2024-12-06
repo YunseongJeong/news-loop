@@ -16,6 +16,7 @@ const passportConfig = require('./passport');
 const mailer = require('./services/mailer');
 
 const app = express();
+// passport, mail schdule를 설정
 passportConfig();
 mailer(); // set mail scheduler;
 
@@ -51,7 +52,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/articles', articlesRouter);
 
-// catch 404 and forward to error handler
+// 404 error handler
 app.use(function(req, res, next) {
   next(createError(404));
 });
@@ -70,5 +71,3 @@ app.use(function(err, req, res, next) {
 const server = app.listen(app.get('port'), () => {
   console.log(app.get('port'), '번 포트에서 대기 중');
 });
-
-// ws(server, app, sessionMiddleware);
