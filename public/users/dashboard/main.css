@@ -1,0 +1,45 @@
+.article-block {
+    background-color: #F7F9FC;
+    margin: 20px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    display: flex;
+
+    transition: transform 0.2s, box-shadow 0.2s;
+    flex: 1;
+    &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+}
+
+a {
+    color: black;
+    text-decoration: none;
+}
+
+.article-image{
+    border-radius: 10px;
+    width: 100px;
+    height: 100px;
+    margin: 15px;
+}
+
+.article-subject{
+    font-size: 18px;
+    font-weight: bold;
+
+}
+
+.article-description{
+    font-size: 12px;
+}
+
+.article-date{
+    text-align: right;
+}
+
+.container{
+    flex: 1;
+}
