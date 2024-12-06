@@ -41,3 +41,19 @@
     margin: 0 auto;
     padding: 0 20px;
 }
+
+button {
+    padding: 12px;
+    background-color: #FF6F61;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin: 0 10px;
+    transition: background-color 0.3s, transform 0.2s;
+
+    &:hover {
+        background-color: #FF4A3D;
+        transform: scale(1.05);
+    }
+}
