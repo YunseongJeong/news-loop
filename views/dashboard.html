@@ -2,36 +2,39 @@
 
 {% block content %}
 
-<h1> Dashboard </h1>
-<p> 이름 : {{ user.username }} </p>
-<p> 이메일 : {{ user.email }} </p>
-<p> 생성일 : {{ user.created_at }} </p>
-
+<div class="userinfo-block">
+    <h1> Dashboard </h1>
+    <p> 이름 : {{ user.username }} </p>
+    <p> 이메일 : {{ user.email }} </p>
+    <p> 생성일 : {{ user.created_at }} </p>
+</div>
 <h2> 내 글 </h2>
 {% if articles.length <= 0 %}
 <P> 없음 </P>
 {% endif %}
 {% for article in articles %}
-<a href="/articles/{{ article.id }}">
+
     <div class="article-block">
-        <img class="article-image" src="{{ article.image_path }}"/>
-        <div class="container">
-            <h4 class="article-subject"> {{ article.subject }} </h4>
-            <p class="article-description"> {{ article.description }} </p>
-            <p class="article-date"> {{ article.created_at }} </p>
-        </div>
-        <button onclick="deleteArticle(event)"> 삭제 </button>
+        <a href="/articles/{{ article.id }}">
+            <img class="article-image" src="{{ article.image_path }}"/>
+            <div class="container">
+                <h4 class="article-subject"> {{ article.subject }} </h4>
+                <p class="article-description"> {{ article.description }} </p>
+                <p class="article-date"> {{ article.created_at }} </p>
+            </div>
+        </a>
+        <button onclick="deleteArticle(event)" data-aid="{{ article.id }}"> 삭제 </button>
     </div>
-</a>
+
 {% endfor %}
 
 {% endblock %}
 
 {% block script %}
 <script>
-    function deleteArticle(event) {
+    function deleteArticle(e) {
         const aid = e.target.dataset.aid;
-        axios.delete(`/articles/comments/${aid}`);
+        axios.delete(`/articles/${aid}`);
     }
 </script>
 {% endblock %}
