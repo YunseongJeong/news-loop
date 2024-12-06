@@ -28,8 +28,18 @@ exports.renderArticle = async (req, res, next) => {
         if (rows.length <= 0){
             return res.status(503).render('error', {message: '내용을 찾을 수 없습니다.', error:{status: 503}});
         }
+        const uid = req.user?.id || null;
+
+        let like = false;
+        if (uid !== null){
+            const [rows] = await db.execute('select count(1) > 0 as "like" from likes where uid=?', [uid]);
+
+            like = rows[0].like;
+        }
+
+        const [likeCount] = await db.execute('select count(1) as c from likes where aid=?;', [aid]);
         const [comments] = await db.execute('select comments.id as id, uid, username, content from comments join users on comments.uid=users.id where aid=?;', [rows[0].id]);
-        res.render('article', {title: rows[0].subject, article: rows[0], comments: comments, user: req.user, isLoggedIn: req.isAuthenticated()});
+        return res.render('article', {title: rows[0].subject, article: rows[0], comments: comments, user: req.user, isLoggedIn: req.isAuthenticated(), likeCount: likeCount[0].c, like: like});
     } catch (err) {
         console.error(err);
         next(err);
