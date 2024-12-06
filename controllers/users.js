@@ -58,3 +58,16 @@ exports.logout = (req, res, next) => {
         return res.redirect('/');
     });
 };
+
+exports.renderDashboard = async (req, res, next) => {
+    try{
+        const uid = req.user.id;
+        const [articles] = await db.execute('select * from articles where uid=?;', [uid]);
+
+        res.render('dashboard', {user: req.user, articles, isLoggedIn: req.isAuthenticated()});
+    } catch (err) {
+        console.error(err);
+        next(err);
+    }
+
+};
