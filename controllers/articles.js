@@ -61,7 +61,7 @@ exports.like = async (req, res, next) =>{
         const aid = req.params.aid;
         const uid = req.user.id;
         await db.execute('insert into likes (aid, uid) values (?, ?)', [aid, uid]);
-        res.redirect(`/articles/${aid}`);
+        return res.redirect(`/articles/${aid}`);
     } catch (err){
         console.error(err);
         next(err);

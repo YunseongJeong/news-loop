@@ -64,24 +64,30 @@
     }
 
     // comment 삭제 함수
-    function deleteComment(e){
+    async function deleteComment(e){
         const commentId = e.target.dataset.commentId;
         console.log(commentId);
-        axios.delete(`/articles/comments/${commentId}`);
+        await axios.delete(`/articles/comments/${commentId}`);
     }
 
     // 좋아요 함수
-    function like(){
+    async function like(){
         const pathname = window.location.pathname;
         const aid = pathname.split('/').pop();
-        axios.get(`/articles/like/${aid}`);
+        axios.get(`/articles/like/${aid}`)
+            .then(()=>{
+                window.location.href = `/articles/${aid}`;
+            });
     }
 
     // 좋아요 취소 함수
-    function unlike(){
+    async function unlike(){
         const pathname = window.location.pathname;
         const aid = pathname.split('/').pop();
-        axios.get(`/articles/unlike/${aid}`);
+        await axios.get(`/articles/unlike/${aid}`)
+            .then(()=>{
+                window.location.href = `/articles/${aid}`;
+            });
     }
 </script>
 {% endblock %}
