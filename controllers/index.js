@@ -1,4 +1,3 @@
-const fs = require('fs');
 const db = require(process.cwd() + '/models');
 
 exports.renderIndex = async (req, res, next)=>{
