@@ -40,7 +40,7 @@ exports.renderArticle = async (req, res, next) => {
 
         let like = false;
         if (uid !== null){
-            const [rows] = await db.execute('select count(1) > 0 as "like" from likes where uid=?', [uid]);
+            const [rows] = await db.execute('select count(1) > 0 as "like" from likes where uid=? and aid=?', [uid, aid]);
 
             like = rows[0].like;
         }
