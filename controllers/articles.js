@@ -102,4 +102,21 @@ exports.deleteComment = async (req, res, next) => {
         console.error(err);
         next(err);
     }
-}
+};
+
+exports.renderEditArticle = (req, res, next)=>{
+    return res.render('edit-article', { title: "create article", isLoggedIn: req.isAuthenticated()});
+};
+
+exports.createArticle = async (req, res, next) => {
+    try {
+        const uid = req.user.id;
+        await db.execute('insert into articles(subject, description, content, uid, image_path) values (?, ?, ?, ?, ?)'
+            , [req.body.subject, req.body.description, req.body.content, uid, `/images/${req.file.filename}`]);
+        return res.redirect('/?message=성공적으로 article을 작성했습니다.');
+    } catch (err) {
+        console.error(err);
+        next(err);
+    }
+
+};
