@@ -3,7 +3,7 @@
 
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-const db = require(process.cwd() + '/models');
+const db = require(process.cwd() + '/models/database');
 const bcrypt = require('bcrypt');
 
 module.exports = ()=>{

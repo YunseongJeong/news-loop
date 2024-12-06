@@ -4,7 +4,7 @@
 const cron = require("node-cron");
 const nodemailer = require('nodemailer');
 const dotenv = require('dotenv');
-const db = require(process.cwd() + '/models');
+const db = require(process.cwd() + '/models/database');
 
 // mail을 보내기 위한 정보를 .env에서 올린다.
 dotenv.config();
@@ -40,12 +40,10 @@ module.exports = ()=>{
             // like 수가 가장 많은 article을 가져옴
             // 그러기 위해 nested query와 join을 사용
             const [articles] = await db.execute('select articles.id as id, subject, image_path, content, articles.created_at as created_at, username, ifnull(like_count, 0) as like_count from (articles join users on articles.uid=users.id) left join (select aid, count(1) as like_count from likes group by (aid)) as l on articles.id = l.aid order by like_count desc limit 1;');
-
             if (articles.length <= 0){
                 console.log('article not found');
                 return;
             }
-
             // 보낼 mail의 option에 article 정보 저장
             mailOptions.subject = articles[0].subject;
             mailOptions.html =
@@ -62,7 +60,6 @@ module.exports = ()=>{
             // 실제 메일 전송 users를 순회하며 보냄
             for (const user of users){
                 mailOptions.to = user.email;
-
                 transporter.sendMail(mailOptions, (error, info) => {
                     if (error) {
                         console.log('메일 전송 실패:', error);
@@ -71,7 +68,6 @@ module.exports = ()=>{
                     }
                 });
             }
-
         } catch (err) {
             console.error('오류 발생:', err);
         }

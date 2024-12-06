@@ -1,7 +1,7 @@
 // controllers/articles.js
 // article 관련 기능을 가지고 있는 controller
 
-const db = require(process.cwd() + '/models');
+const db = require(process.cwd() + '/models/database');
 
 // delete article
 // article을 삭제한다.
@@ -136,5 +136,4 @@ exports.saveArticle = async (req, res, next) => {
         console.error(err);
         next(err);
     }
-
 };

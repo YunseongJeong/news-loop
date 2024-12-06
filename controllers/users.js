@@ -1,7 +1,7 @@
 // controllers/users.js
 // user (마이 페이지, 로그인, 회원가입)에 관련된 기능을 가지고 있는 controller
 
-const db = require(process.cwd() + '/models');
+const db = require(process.cwd() + '/models/database');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
 
@@ -45,8 +45,8 @@ exports.signup = async (req, res, next) =>{
     const email = req.body.email;
     const password = req.body.password;
     try {
-        exUser = await db.execute('select 1 from users where email=?;', [email]);
-        if (exUser.length <= 0){
+        const [users] = await db.execute('select 1 from users where email=?;', [email]);
+        if (users.length <= 0){
             return res.redirect('/join?error=exist');
         }
         const hash = await bcrypt.hash(password, 12);
